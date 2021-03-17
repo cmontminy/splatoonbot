@@ -25,7 +25,7 @@ class Maps(commands.Cog):
     async def maplist_fetch(self, ctx, tournament):
         await ctx.send(f'searching for {tournament}...')
 
-        cursor.execute("SELECT name, date, type, maps FROM maplists WHERE name=?", (tournament,))
+        cursor.execute("SELECT name, date, type, maps FROM maplists WHERE name=%s", (tournament,))
         data = cursor.fetchone()
 
         if data is None:
