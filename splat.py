@@ -63,7 +63,7 @@ async def maplist_add(ctx, tournament, date):
     
     if type == "rounds" or type == "pool":
         data = (tournament, date, type, str(maplist))
-        cursor.execute("INSERT INTO maplists VALUES (%s, %s, %s, %s)", (data,))
+        cursor.execute("INSERT INTO maplists VALUES (%s, %s, %s, %s)", data)
         connection.commit()
         await ctx.send(f'Successfully added {tournament} to the map list')
     
