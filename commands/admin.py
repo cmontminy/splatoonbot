@@ -1,16 +1,17 @@
 import discord
 from discord.ext import commands
 
-import sqlite3 # connect, commit
 
-connection = sqlite3.connect("splat.db")
-cursor     = connection.cursor()
+DATABASE_URL = os.environ['DATABASE_URL'] # connect to postgres if online
+connection = psycopg2.connect(DATABASE_URL, sslmode='require')
+cursor = connection.cursor()
+
 
 class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    
+
     @commands.command()
     async def createmaplistdb(self, ctx):
         # init database
