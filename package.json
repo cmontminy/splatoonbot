@@ -1,0 +1,13 @@
+{
+    "name": "splatbot",
+    "description": "A Discord bot for the Splatoon server",
+    "version": "0.0.0",
+    "main": "splat.py",
+    "scripts": {
+      "start": "python3 splat.py"
+    },
+    "dependencies": {
+      "discord.py": "1.6.0",
+      "request": "2.81.0"
+    }
+  }
