@@ -2,7 +2,8 @@ import json
 import discord
 import asyncio
 from discord.ext import commands
-
+import os
+import psycopg2
 
 DATABASE_URL = os.environ['DATABASE_URL'] # connect to postgres if online
 connection = psycopg2.connect(DATABASE_URL, sslmode='require')
