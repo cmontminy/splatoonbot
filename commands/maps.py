@@ -23,8 +23,6 @@ class Maps(commands.Cog):
     
     @commands.command()
     async def maplist_fetch(self, ctx, tournament):
-        await ctx.send(f'searching for {tournament}...')
-
         cursor.execute("SELECT name, date, type, maps FROM maplists WHERE name=%s", (tournament,))
         data = cursor.fetchone()
 
@@ -34,7 +32,7 @@ class Maps(commands.Cog):
         name, date, type, maps = data
         maps = json.loads(maps.replace("\'", "\""))
         
-        embed = discord.Embed(title=tournament, description=f"{type} - {date}")
+        embed = discord.Embed(title=tournament, description=f"{type.capitalize()} - {date}")
         
         index = 1
         for round in maps['rounds']:
@@ -57,6 +55,6 @@ class Maps(commands.Cog):
         value_str = ""
         for tournament in data:
             value_str += f"{tournament[0]} - {tournament[1]}\n"
-        embed.add_field(name="haha", value=value_str, inline=False)
+        embed.add_field(name="Page 1", value=value_str, inline=False)
         
         await ctx.send(embed=embed)
