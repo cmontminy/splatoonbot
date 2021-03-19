@@ -1,12 +1,15 @@
 import discord
 from discord.ext import commands
 import os
-import psycopg2
+# import psycopg2
+import sqlite3
 
 
-DATABASE_URL = os.environ['DATABASE_URL'] # connect to postgres if online
-connection = psycopg2.connect(DATABASE_URL, sslmode='require')
-cursor = connection.cursor()
+# DATABASE_URL = os.environ['DATABASE_URL'] # connect to postgres if online
+# connection = psycopg2.connect(DATABASE_URL, sslmode='require')
+# cursor = connection.cursor()
+connection = sqlite3.connect("splat.db")
+cursor     = connection.cursor()
 
 
 class Admin(commands.Cog):
