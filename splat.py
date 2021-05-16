@@ -48,32 +48,31 @@ guild_ids = [670469511572488223, 771226056346042410] # bot testing id, splat ser
 
 @slash.slash(name="ping", guild_ids=guild_ids)
 async def _ping(ctx): # Defines a new "context" (ctx) command called "ping."
-    await ctx.respond()
     await ctx.send(f"Pong! ({bot.latency*1000}ms)")
 
-@slash.slash(name="maplist",
-             description="Commands for maplists from tournaments",
-             options=[
-               create_option(
-                 name="option",
-                 description="Maplist options",
-                 option_type=3,
-                 required=False,
-                 choices=[
-                  create_choice(
-                    name="add",
-                    value="DOGE!"
-                  ),
-                  create_choice(
-                    name="ChoiceTwo",
-                    value="NO DOGE"
-                  )
-                ]
-               )
-             ], guild_ids=guild_ids)
-async def test(ctx, optone: str):
-    await ctx.respond()
-    await ctx.send(content=f"Wow, you actually chose {optone}? :(")
+# @slash.slash(name="maplist",
+#              description="Commands for maplists from tournaments",
+#              options=[
+#                create_option(
+#                  name="option",
+#                  description="Maplist options",
+#                  option_type=3,
+#                  required=False,
+#                  choices=[
+#                   create_choice(
+#                     name="add",
+#                     value="DOGE!"
+#                   ),
+#                   create_choice(
+#                     name="ChoiceTwo",
+#                     value="NO DOGE"
+#                   )
+#                 ]
+#                )
+#              ], guild_ids=guild_ids)
+# async def test(ctx, optone: str):
+#     await ctx.respond()
+#     await ctx.send(content=f"Wow, you actually chose {optone}? :(")
 
 @bot.command()
 async def maplist_add(ctx, tournament, date):
@@ -94,8 +93,8 @@ async def maplist_add(ctx, tournament, date):
     # maps = maplist['rounds']
     
     if type == "rounds" or type == "pool":
-        data = (tournament, date, type, str(maplist))
-        cursor.execute("INSERT INTO maplists VALUES (%s, %s, %s, %s)", data)
+        data = (tournament.lower(), date, type, str(maplist))
+        cursor.execute("INSERT INTO maplists VALUES (?, ?, ?, ?)", data)
         connection.commit()
         await ctx.send(f'Successfully added {tournament} to the map list')
     
@@ -110,4 +109,10 @@ async def maplist_add(ctx, tournament, date):
 
 
 # bot.run(os.environ.get('TOKEN'))
-bot.run("ODIwNTA4NjkwMTg3NTUwNzIw.YE2MRA.lfGq8pliV1UGqA0S8Bk3fCrPTt8")
+
+bot_token = ""
+with open("secrets.txt",'r') as fl:
+    for line in fl:
+        if "TOKEN" in line:
+            bot_token = line.split("=")[1]
+bot.run(bot_token)   
