@@ -48,63 +48,13 @@ guild_ids = [670469511572488223, 771226056346042410] # bot testing id, splat ser
 async def _ping(ctx): # Defines a new "context" (ctx) command called "ping."
     await ctx.send(f"Pong! ({bot.latency*1000}ms)")
 
-# @slash.slash(name="maplist",
-#              description="Commands for maplists from tournaments",
-#              options=[
-#                create_option(
-#                  name="option",
-#                  description="Maplist options",
-#                  option_type=3,
-#                  required=False,
-#                  choices=[
-#                   create_choice(
-#                     name="add",
-#                     value="DOGE!"
-#                   ),
-#                   create_choice(
-#                     name="ChoiceTwo",
-#                     value="NO DOGE"
-#                   )
-#                 ]
-#                )
-#              ], guild_ids=guild_ids)
-# async def test(ctx, optone: str):
-#     await ctx.respond()
-#     await ctx.send(content=f"Wow, you actually chose {optone}%s :(")
-
-@bot.command()
-async def maplist_add(ctx, tournament, date):
-    await ctx.send('maplist time')
-
-    def check(m):
-        return ctx.author == m.author
-    
-    try:
-        msg = await bot.wait_for('message', timeout=10.0, check=check)
-    except asyncio.TimeoutError:
-        return await ctx.send('you took too long sadge')
+@slash.slash(name="callouts", guild_ids=guild_ids)
+async def _callouts(ctx, map: str):
+    path = f'callouts/{map}.png'
+    if os.path.exists(path):
+        await ctx.send(file=discord.File(f'callouts/{map}.png'))
     else:
-        await ctx.send('received list')
-
-    maplist = json.loads(msg.content)
-    type = maplist['type']
-    # maps = maplist['rounds']
-    
-    if type == "rounds" or type == "pool":
-        data = (tournament.lower(), date, type, str(maplist))
-        cursor.execute("INSERT INTO maplists VALUES (%s, %s, %s, %s)", data)
-        connection.commit()
-        await ctx.send(f'Successfully added {tournament} to the map list')
-    
-    else:
-        await ctx.send('you fucked up')
-
-
-# # test command
-# @bot.command()
-# async def test(ctx):
-#     await ctx.send("hi !")
-
+        await ctx.send("I couldn't find that map sadge")
 
 bot.run(os.environ.get('TOKEN'))
 
