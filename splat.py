@@ -22,6 +22,8 @@ connection = psycopg2.connect(DATABASE_URL, sslmode='require')
 # connection = sqlite3.connect("splat.db")
 cursor     = connection.cursor()
 
+maps = {}
+
 
 # bot description
 command_prefix = '!'
@@ -42,6 +44,11 @@ async def on_ready():
     game = discord.Game("stinky is cute !")
     await bot.change_presence(activity = game)
 
+    with open("maps") as infile:
+        for line in infile:
+            data = line.split("=")
+            maps[data[0]] = data[1]
+
 guild_ids = [670469511572488223, 771226056346042410] # bot testing id, splat server
 
 @slash.slash(name="ping", guild_ids=guild_ids)
@@ -50,16 +57,8 @@ async def _ping(ctx): # Defines a new "context" (ctx) command called "ping."
 
 @slash.slash(name="callouts", guild_ids=guild_ids)
 async def _callouts(ctx, map: str):
-    def get_mapstr(code):
-        cursor.execute("SELECT string FROM mapmodes WHERE code=%s", (code,))
-        data = cursor.fetchone()
-        if data is None:
-            return None
-        else: 
-            return data[0]
-
     if len(map) == 2:
-        map = get_mapstr(map)
+        map = maps[map]
         if map is None:
             return await ctx.send(f"I don't know the map code {map} !")
 
