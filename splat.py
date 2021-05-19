@@ -53,11 +53,16 @@ async def _callouts(ctx, map: str):
     def get_mapstr(code):
         cursor.execute("SELECT string FROM mapmodes WHERE code=%s", (code,))
         data = cursor.fetchone()
-        return data[0]
+        if data is None:
+            return None
+        else: 
+            return data[0]
 
     if len(map) == 2:
         map = get_mapstr(map)
-    
+        if map is None:
+            return await ctx.send(f"I don't know the map code {map} !")
+
     path = f'callouts/{map.lower()}.png'
     if os.path.exists(path):
         await ctx.send(file=discord.File(f'callouts/{map}.png'))
