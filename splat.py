@@ -5,10 +5,10 @@ import pathlib
 import sys
 import io
 import traceback
-import sqlite3 # connect, commit
+# import sqlite3 # connect, commit
 import asyncio
 import json
-# import psycopg2
+import psycopg2
 from discord.ext   import commands
 from discord_slash import SlashCommand
 from discord_slash.utils.manage_commands import create_option, create_choice
@@ -17,11 +17,9 @@ from commands.maps  import Maps
 from commands.admin import Admin
 
 
-# DATABASE_URL = os.environ['DATABASE_URL'] # connect to postgres if online
-# connection = psycopg2.connect(DATABASE_URL, sslmode='require')
-# cursor = connection.cursor()
-
-connection = sqlite3.connect("splat.db")
+DATABASE_URL = os.environ['DATABASE_URL'] # connect to postgres if online
+connection = psycopg2.connect(DATABASE_URL, sslmode='require')
+# connection = sqlite3.connect("splat.db")
 cursor     = connection.cursor()
 
 
@@ -108,11 +106,11 @@ async def maplist_add(ctx, tournament, date):
 #     await ctx.send("hi !")
 
 
-# bot.run(os.environ.get('TOKEN'))
+bot.run(os.environ.get('TOKEN'))
 
-bot_token = ""
-with open("secrets.txt",'r') as fl:
-    for line in fl:
-        if "TOKEN" in line:
-            bot_token = line.split("=")[1]
-bot.run(bot_token)   
+# bot_token = ""
+# with open("secrets.txt",'r') as fl:
+#     for line in fl:
+#         if "TOKEN" in line:
+#             bot_token = line.split("=")[1]
+# bot.run(bot_token)   

@@ -2,17 +2,16 @@ import json
 import discord
 import asyncio
 import os
-# import psycopg2
-import sqlite3
+import psycopg2
+# import sqlite3
 
 from discord.ext   import commands
 from discord_slash import cog_ext, SlashContext, SlashCommand
 from discord_slash.utils.manage_commands import create_option, create_choice
 
-# DATABASE_URL = os.environ['DATABASE_URL'] # connect to postgres if online
-# connection = psycopg2.connect(DATABASE_URL, sslmode='require')
-# cursor = connection.cursor()
-connection = sqlite3.connect("splat.db")
+DATABASE_URL = os.environ['DATABASE_URL'] # connect to postgres if online
+connection = psycopg2.connect(DATABASE_URL, sslmode='require')
+# connection = sqlite3.connect("splat.db")
 cursor     = connection.cursor()
 
 guild_ids = [670469511572488223, 771226056346042410] # bot testing id, splat server
