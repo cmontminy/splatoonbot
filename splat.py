@@ -60,9 +60,15 @@ async def _ping(ctx): # Defines a new "context" (ctx) command called "ping."
              options=[
                create_option(
                  name="rm",
-                 description="Pulls rainmaker path instead of callout image",
+                 description="True = displays rm path for the map",
                  option_type=5,
                  required=False
+               ),
+               create_option(
+                 name="map",
+                 description="Name or short code of the map",
+                 option_type=3,
+                 required=True
                )
              ],
              guild_ids=guild_ids)
