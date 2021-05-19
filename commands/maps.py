@@ -31,40 +31,6 @@ class Maps(commands.Cog):
     async def _mapping(self, ctx): # Defines a new "context" (ctx) command called "ping."
         await ctx.send(f"map Pong! ({self.bot.latency*1000}ms)")
 
-    @cog_ext.cog_subcommand(base="group", name="ping", guild_ids=guild_ids)
-    async def group_ping(self, ctx):
-        await ctx.send("pong")
-
-    @cog_ext.cog_subcommand(base="group", name="pingpong", guild_ids=guild_ids)
-    async def group_pingpong(self, ctx):
-        await ctx.send("pongpong")
-
-
-    @commands.command()
-    async def maplist_fetch(self, ctx, tournament):
-        cursor.execute("SELECT name, date, type, maps FROM maplists WHERE name=?", (tournament,))
-        data = cursor.fetchone()
-
-        if data is None:
-            return await ctx.send(f"{tournament} doesn't exist tt")
-
-        name, date, type, maps = data
-        maps = json.loads(maps.replace("\'", "\""))
-        
-        embed = discord.Embed(title=tournament, description=f"{type.capitalize()} - {date}")
-        
-        index = 1
-        for round in maps['rounds']:
-            value_str = ""
-            for match in round:
-                value_str += f"{match['mode']} - {match['map']}\n"
-            embed.add_field(name=f"Round {index}", value=value_str, inline=False)
-            index += 1
-
-        await ctx.send(embed=embed)
-    
-
-
 
     @cog_ext.cog_subcommand(base="maplist", name="get", guild_ids=guild_ids)
     async def maplist_get(self, ctx, tournament: str):
@@ -149,12 +115,9 @@ class Maps(commands.Cog):
     @cog_ext.cog_subcommand(base="maplist", name="codes", guild_ids=guild_ids)
     async def maplist_codes(self, ctx):
         embed = discord.Embed(title="Maplist Codes")
-        
-        value_str = ""
-        for tournament in data:
-            value_str += f"{tournament[0]} - {tournament[1]}\n"
-        embed.add_field(name="Page 1", value=value_str, inline=False)
-        
+        embed.add_field(name="Modes", value="SZ = Splat Zones\nTC = Tower Control\nRM = Rainmaker\nCB = Clam Blitz\nTW = Turf War", inline=False)
+        value_str = "ag = Ancho-V Games\nam = Arowana Mall\nbs = Blackbelly Skatepark\nct = Camp Triggerfish\nga = Goby Arena\nhp = Humpback Pump Track\nia = Inkblot Art Academy\nkd = Kelp Dome\nmk = MakoMart\nmm = Manta Maria\nmt = Moray Towers\nmf = Musselforge Fitness\nah = New Albacore Hotel\npp = Piranha Pit\npm = Port Mackerel\nsi = Shellendorf Institute\nsp = Skipper Pavilion\nsc = Snapper Canal\nsm = Starfish Mainstage\nss = Sturgeon Shipyard\ntr = The Reef\nwh = Wahoo World\nww = Walleye Warehouse\n"
+        embed.add_field(name="Maps", value=value_str, inline=False)
         await ctx.send(embed=embed)
 
     # @commands.command()
