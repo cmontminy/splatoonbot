@@ -50,7 +50,15 @@ async def _ping(ctx): # Defines a new "context" (ctx) command called "ping."
 
 @slash.slash(name="callouts", guild_ids=guild_ids)
 async def _callouts(ctx, map: str):
-    path = f'callouts/{map}.png'
+    def get_mapstr(code):
+        cursor.execute("SELECT string FROM mapmodes WHERE code=%s", (code,))
+        data = cursor.fetchone()
+        return data[0]
+
+    if len(map) == 2:
+        map = get_mapstr(map)
+    
+    path = f'callouts/{map.lower()}.png'
     if os.path.exists(path):
         await ctx.send(file=discord.File(f'callouts/{map}.png'))
     else:
