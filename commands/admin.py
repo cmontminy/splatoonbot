@@ -30,7 +30,7 @@ class Admin(commands.Cog):
 
     @commands.command()
     async def createmapdb(self, ctx):
-        cursor.execute(''' DROP TABLE IF EXISTS mapmodes ''')
+        cursor.execute("DROP TABLE IF EXISTS mapmodes")
         cursor.execute(''' CREATE TABLE mapmodes (
             code     text,
             string   text
