@@ -66,7 +66,7 @@ async def _callouts(ctx, map: str):
     if os.path.exists(path):
         await ctx.send(file=discord.File(f'callouts/{map}.png'))
     else:
-        await ctx.send("I couldn't find that map sadge")
+        await ctx.send(f"I couldn't find the picture for {map} sadge")
 
 bot.run(os.environ.get('TOKEN'))
 
