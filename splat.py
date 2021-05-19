@@ -55,35 +55,32 @@ guild_ids = [670469511572488223, 771226056346042410] # bot testing id, splat ser
 async def _ping(ctx): # Defines a new "context" (ctx) command called "ping."
     await ctx.send(f"Pong! ({bot.latency*1000}ms)")
 
-@slash.slash(name="callouts", guild_ids=guild_ids)
-async def _callouts(ctx, map: str):
+@slash.slash(name="callouts", 
+             description="Pulls pictures of callouts or rainmaker paths",
+             options=[
+               create_option(
+                 name="rm",
+                 description="Pulls rainmaker path instead of callout image",
+                 option_type=5,
+                 required=False
+               )
+             ],
+             guild_ids=guild_ids)
+async def _callouts(ctx, rm: bool, map: str):
     if len(map) == 2:
         map = maps[map].lower().rstrip()
         print(map)
         if map is None:
             return await ctx.send(f"I don't know the map code {map} !")
-
-    path = f'callouts/{map}.png'
-    print(path)
+    if rm:
+        path = f'rm/{map}.png'
+    else:
+        path = f'callouts/{map}.png'
     if os.path.exists(path):
         await ctx.send(file=discord.File(path))
     else:
         await ctx.send(f"I couldn't find the picture for {map} sadge")
 
-@slash.slash(name="rmpath", guild_ids=guild_ids)
-async def _callouts(ctx, map: str):
-    if len(map) == 2:
-        map = maps[map].lower().rstrip()
-        print(map)
-        if map is None:
-            return await ctx.send(f"I don't know the map code {map} !")
-
-    path = f'rm/{map}.png'
-    print(path)
-    if os.path.exists(path):
-        await ctx.send(file=discord.File(path))
-    else:
-        await ctx.send(f"I couldn't find the picture for {map} sadge")
 
 bot.run(os.environ.get('TOKEN'))
 
