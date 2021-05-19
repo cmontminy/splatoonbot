@@ -64,6 +64,7 @@ async def _callouts(ctx, map: str):
             return await ctx.send(f"I don't know the map code {map} !")
 
     path = f'callouts/{map}.png'
+    print(path)
     if os.path.exists(path):
         await ctx.send(file=discord.File(path))
     else:
