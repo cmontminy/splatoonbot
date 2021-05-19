@@ -20,18 +20,17 @@ class Maps(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         # slash = SlashCommand(self.bot, sync_commands=True)
-
    
-    @commands.command()
-    async def maptest(self, ctx):
-        await ctx.send('Hello from map file!')
+    # @commands.command()
+    # async def maptest(self, ctx):
+    #     await ctx.send('Hello from map file!')
 
-    @cog_ext.cog_slash(name="mapping", guild_ids=guild_ids)
-    async def _mapping(self, ctx): # Defines a new "context" (ctx) command called "ping."
-        await ctx.send(f"map Pong! ({self.bot.latency*1000}ms)")
+    # @cog_ext.cog_slash(name="mapping", guild_ids=guild_ids)
+    # async def _mapping(self, ctx): # Defines a new "context" (ctx) command called "ping."
+    #     await ctx.send(f"map Pong! ({self.bot.latency*1000}ms)")
 
 
-    @cog_ext.cog_subcommand(base="maplist", name="get", guild_ids=guild_ids)
+    @cog_ext.cog_subcommand(base="maplist", name="get", description="Fetches the maplist for the given tournament", guild_ids=guild_ids)
     async def maplist_get(self, ctx, tournament: str):
         def get_mapstr(code):
             cursor.execute("SELECT string FROM mapmodes WHERE code=%s", (code,))
@@ -61,7 +60,7 @@ class Maps(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @cog_ext.cog_subcommand(base="maplist", name="maps", guild_ids=guild_ids)
+    @cog_ext.cog_subcommand(base="maplist", name="maps", description="Lists the current tournaments in the database", guild_ids=guild_ids)
     async def maplist_maps(self, ctx):
         cursor.execute("SELECT name, date FROM maplists")
         data = cursor.fetchall()
@@ -111,7 +110,7 @@ class Maps(commands.Cog):
         await ctx.send(f'Successfully added {name} to the map list')
     
 
-    @cog_ext.cog_subcommand(base="maplist", name="codes", guild_ids=guild_ids)
+    @cog_ext.cog_subcommand(base="maplist", name="codes", description="Displays short codes for maplist interactions", guild_ids=guild_ids)
     async def maplist_codes(self, ctx):
         embed = discord.Embed(title="Maplist Codes")
         embed.add_field(name="Modes", value="SZ = Splat Zones\nTC = Tower Control\nRM = Rainmaker\nCB = Clam Blitz\nTW = Turf War", inline=False)
