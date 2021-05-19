@@ -51,7 +51,7 @@ class Maps(commands.Cog):
         for round in mapstr.split(","):
             value_str = ""
             for char in range(0, len(round), 4):
-                code = mapstr[char:char+4]
+                code = round[char:char+4]
                 string = get_mapstr(code)
                 value_str += f"{string}\n"
             embed.add_field(name=f"Round {index}", value=value_str, inline=False)
@@ -107,8 +107,20 @@ class Maps(commands.Cog):
         data = (name.lower(), date, num_rounds, mapstr)
         cursor.execute("INSERT INTO maplists VALUES (%s, %s, %s, %s)", data)
         connection.commit()
-        await ctx.send(f'Successfully added {name} to the map list')
+        await ctx.send(f'Successfully added {name} to the maplist')
     
+
+    @cog_ext.cog_subcommand(base="maplist", name="delete", description="Deletes a maplist from the database", guild_ids=guild_ids)
+    async def maplist_delete(self, ctx, tournament: str):
+        tournament = tournament.lower()
+        cursor.execute("SELECT name FROM maplists")
+        data = cursor.fetchone()
+        if data is None:
+            return await ctx.send(f'{tournament} is not in the database !')
+            
+        cursor.execute("DELETE FROM maplists WHERE name=%s", (tournament,))
+        connection.commit()
+        await ctx.send(f'Removed {tournament} from the maplist')
 
     @cog_ext.cog_subcommand(base="maplist", name="codes", description="Displays short codes for maplist interactions", guild_ids=guild_ids)
     async def maplist_codes(self, ctx):

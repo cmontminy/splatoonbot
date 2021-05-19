@@ -96,6 +96,7 @@ async def _callouts(ctx, map: str, rm: bool = False):
 async def _help(ctx):
     embed = discord.Embed(title="Lil Judd's Commands", description="Lil Judd is a slash command bot ! This means that all of these commands are accessed by typing '/' at the beginning of a Discord message instead of using usual prefixes.", color=0x00b3ff)
     embed.add_field(name="/maplist add", value="Adds a new maplist to Lil Judd's database. The mapstr is a code built up of short codes for map mode combos visible in the command /maplist codes. Codes separated by commas will be interpreted to be in separate rounds. For example: szgacbkd,tcmmrmpp corresponds to Round 1 having Splat Zones Goby Arena and Clam Blitz Kelp Dome and Round 2 having Tower Control Manta Marina and Rainmaker Piranha Pit", inline=False)
+    embed.add_field(name="/maplist delete", value="Removes the given tournament from the database", inline=False)
     embed.add_field(name="/maplist codes", value="Displays a list of short codes mentioned above", inline=False)
     embed.add_field(name="/maplist get", value="Displays a maplist for the given tournament name", inline=False)
     embed.add_field(name="/maplist maps", value="Displays the current maplists stored in Lil Judd's database", inline=False)
