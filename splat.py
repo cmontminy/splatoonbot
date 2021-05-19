@@ -74,21 +74,11 @@ async def _ping(ctx):  # Defines a new "context" (ctx) command called "ping."
                      name="rm",
                      description="True = displays rm path for the map",
                      option_type=5,
-                     required=False,
-                     choices=[
-                         create_choice(
-                             name="False",
-                             value=False
-                         ),
-                         create_choice(
-                             name="True",
-                             value=True
-                         )
-                     ]
+                     required=False
                  )
              ],
              guild_ids=guild_ids)
-async def _callouts(ctx, map: str, rm: bool):
+async def _callouts(ctx, map: str, rm: bool = False):
     if len(map) == 2:
         map = maps[map].lower().rstrip()
         print(map)
