@@ -17,6 +17,7 @@ class Admin(commands.Cog):
 
     @commands.command()
     async def createmaplistdb(self, ctx):
+        cursor.execute("DROP TABLE IF EXISTS maplists")
         # init database
         cursor.execute(''' CREATE TABLE maplists (
             name       text,
