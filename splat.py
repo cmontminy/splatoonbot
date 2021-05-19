@@ -64,7 +64,7 @@ async def _callouts(ctx, map: str):
 
     path = f'callouts/{map.lower()}.png'
     if os.path.exists(path):
-        await ctx.send(file=discord.File(f'callouts/{map}.png'))
+        await ctx.send(file=discord.File(path))
     else:
         await ctx.send(f"I couldn't find the picture for {map} sadge")
 
