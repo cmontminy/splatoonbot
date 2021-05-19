@@ -17,32 +17,39 @@ class Admin(commands.Cog):
 
     @commands.command()
     async def createmaplistdb(self, ctx):
-        cursor.execute("DROP TABLE IF EXISTS maplists")
-        # init database
-        cursor.execute(''' CREATE TABLE maplists (
-            name       text,
-            date       text,
-            num_rounds text,
-            mapstr     text
-        )''')
-        connection.commit()
-        await ctx.send('created maplist db')
+        if ctx.message.author.id != 146450066943639552:
+            return await ctx.send("you're not cake !")
+        else:
+            await ctx.send("hi cake !")
+        # cursor.execute("DROP TABLE IF EXISTS maplists")
+        # # init database
+        # cursor.execute(''' CREATE TABLE maplists (
+        #     name       text,
+        #     date       text,
+        #     num_rounds text,
+        #     mapstr     text
+        # )''')
+        # connection.commit()
+        # await ctx.send('created maplist db')
 
 
     @commands.command()
     async def createmapdb(self, ctx):
-        cursor.execute("DROP TABLE IF EXISTS mapmodes")
-        cursor.execute(''' CREATE TABLE mapmodes (
-            code     text,
-            string   text
-        )''')
-        connection.commit()
-        await ctx.send('created mapmodes db')
+        if ctx.message.author.id != 146450066943639552:
+            return await ctx.send("you're not cake !")
 
-        with open("mapmodes") as in_file:
-            for line in in_file:
-                arr  = line.split("=")
-                data = (arr[0], str(arr[1]).rstrip("\n"))
-                cursor.execute("INSERT INTO mapmodes VALUES (%s, %s)", data)
-        connection.commit()
+        # cursor.execute("DROP TABLE IF EXISTS mapmodes")
+        # cursor.execute(''' CREATE TABLE mapmodes (
+        #     code     text,
+        #     string   text
+        # )''')
+        # connection.commit()
+        # await ctx.send('created mapmodes db')
+
+        # with open("mapmodes") as in_file:
+        #     for line in in_file:
+        #         arr  = line.split("=")
+        #         data = (arr[0], str(arr[1]).rstrip("\n"))
+        #         cursor.execute("INSERT INTO mapmodes VALUES (%s, %s)", data)
+        # connection.commit()
                 

@@ -81,7 +81,6 @@ async def _ping(ctx):  # Defines a new "context" (ctx) command called "ping."
 async def _callouts(ctx, map: str, rm: bool = False):
     if len(map) == 2:
         map = maps[map].lower().rstrip()
-        print(map)
         if map is None:
             return await ctx.send(f"I don't know the map code {map} !")
     if rm:
