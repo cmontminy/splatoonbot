@@ -42,6 +42,6 @@ class Admin(commands.Cog):
             for line in in_file:
                 arr  = line.split("=")
                 data = (arr[0], str(arr[1]).rstrip("\n"))
-                cursor.execute("INSERT INTO mapmodes VALUES (?, ?)", data)
+                cursor.execute("INSERT INTO mapmodes VALUES (%s, %s)", data)
         connection.commit()
                 

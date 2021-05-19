@@ -70,7 +70,7 @@ async def _ping(ctx): # Defines a new "context" (ctx) command called "ping."
 #              ], guild_ids=guild_ids)
 # async def test(ctx, optone: str):
 #     await ctx.respond()
-#     await ctx.send(content=f"Wow, you actually chose {optone}? :(")
+#     await ctx.send(content=f"Wow, you actually chose {optone}%s :(")
 
 @bot.command()
 async def maplist_add(ctx, tournament, date):
@@ -92,7 +92,7 @@ async def maplist_add(ctx, tournament, date):
     
     if type == "rounds" or type == "pool":
         data = (tournament.lower(), date, type, str(maplist))
-        cursor.execute("INSERT INTO maplists VALUES (?, ?, ?, ?)", data)
+        cursor.execute("INSERT INTO maplists VALUES (%s, %s, %s, %s)", data)
         connection.commit()
         await ctx.send(f'Successfully added {tournament} to the map list')
     

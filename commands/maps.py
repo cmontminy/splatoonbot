@@ -34,12 +34,12 @@ class Maps(commands.Cog):
     @cog_ext.cog_subcommand(base="maplist", name="get", guild_ids=guild_ids)
     async def maplist_get(self, ctx, tournament: str):
         def get_mapstr(code):
-            cursor.execute("SELECT string FROM mapmodes WHERE code=?", (code,))
+            cursor.execute("SELECT string FROM mapmodes WHERE code=%s", (code,))
             data = cursor.fetchone()
             return data[0]
         
         tournament = tournament.lower()
-        cursor.execute("SELECT name, date, num_rounds, mapstr FROM maplists WHERE name=?", (tournament,))
+        cursor.execute("SELECT name, date, num_rounds, mapstr FROM maplists WHERE name=%s", (tournament,))
         data = cursor.fetchone()
 
         if data is None:
@@ -106,7 +106,7 @@ class Maps(commands.Cog):
              ], guild_ids=guild_ids)
     async def maplist_add(self, ctx, name: str, date: str, num_rounds: int, mapstr: str):
         data = (name.lower(), date, num_rounds, mapstr)
-        cursor.execute("INSERT INTO maplists VALUES (?, ?, ?, ?)", data)
+        cursor.execute("INSERT INTO maplists VALUES (%s, %s, %s, %s)", data)
         connection.commit()
         await ctx.send(f'Successfully added {name} to the map list')
     
