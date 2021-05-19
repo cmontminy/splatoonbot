@@ -92,6 +92,16 @@ async def _callouts(ctx, map: str, rm: bool = False):
     else:
         await ctx.send(f"I couldn't find the picture for {map} sadge")
 
+@slash.slash(name="help", guild_ids=guild_ids)
+async def _help(ctx):
+    embed = discord.Embed(title="Lil Judd's Commands", description="Lil Judd is a slash command bot ! This means that all of these commands are accessed by typing '/' at the beginning of a Discord message instead of using usual prefixes.", color=0x00b3ff)
+    embed.add_field(name="/maplist add", value="Adds a new maplist to Lil Judd's database. The mapstr is a code built up of short codes for map mode combos visible in the command /maplist codes. Codes separated by commas will be interpreted to be in separate rounds. For example: szgacbkd,tcmmrmpp corresponds to Round 1 having Splat Zones Goby Arena and Clam Blitz Kelp Dome and Round 2 having Tower Control Manta Marina and Rainmaker Piranha Pit", inline=False)
+    embed.add_field(name="/maplist codes", value="Displays a list of short codes mentioned above", inline=False)
+    embed.add_field(name="/maplist get", value="Displays a maplist for the given tournament name", inline=False)
+    embed.add_field(name="/maplist maps", value="Displays the current maplists stored in Lil Judd's database", inline=False)
+    embed.add_field(name="/callouts", value="Sends the image with annotated callouts corresponding to the given map. If the optional argument rm is set to True, the rainmaker path for the given map will be sent instead", inline=False)
+    embed.set_footer(text="Ask Cake if you have any questions ! <3")
+    await ctx.send(embed=embed)
 
 bot.run(os.environ.get('TOKEN'))
 
