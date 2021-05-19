@@ -58,12 +58,27 @@ async def _ping(ctx): # Defines a new "context" (ctx) command called "ping."
 @slash.slash(name="callouts", guild_ids=guild_ids)
 async def _callouts(ctx, map: str):
     if len(map) == 2:
-        map = maps[map].lower()
+        map = maps[map].lower().rstrip()
         print(map)
         if map is None:
             return await ctx.send(f"I don't know the map code {map} !")
 
     path = f'callouts/{map}.png'
+    print(path)
+    if os.path.exists(path):
+        await ctx.send(file=discord.File(path))
+    else:
+        await ctx.send(f"I couldn't find the picture for {map} sadge")
+
+@slash.slash(name="rmpath", guild_ids=guild_ids)
+async def _callouts(ctx, map: str):
+    if len(map) == 2:
+        map = maps[map].lower().rstrip()
+        print(map)
+        if map is None:
+            return await ctx.send(f"I don't know the map code {map} !")
+
+    path = f'rm/{map}.png'
     print(path)
     if os.path.exists(path):
         await ctx.send(file=discord.File(path))
